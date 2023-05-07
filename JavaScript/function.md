@@ -1,3 +1,4 @@
+
 # Function
 
 ## 通常の記述
@@ -38,5 +39,37 @@ let sample {
 		メソッドで実行するコードを記述
 	}	
 }
+```
+
+## 高階関数
+
+高階関数は：
+・引数として関数を受け取る
+・戻り値に関数を指定する
+
+### 引数として関数を受け取る
+```
+// サイコロの目をrollDie関数として定義
+function rollDie() {
+  const roll = Math.floor(Math.random() * 6) + 1;
+  console.log(roll);
+}
+
+//高階関数として、callTwiceを定義 (低階にはrollDieが位置付)
+function callTwice(func) {
+  func();
+  func();
+}
+
+//高階関数として、callTenRimesを定義　(低階にはrollDieが位置付)
+function callTenTimes(f) {
+  for (let i = 0; i < 10; i++) {
+    f();
+  }
+}
+
+// 高階関数の実行
+allTwice(rollDie);
+callTenTimes(rollDie);
 ```
 
