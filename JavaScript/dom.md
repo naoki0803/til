@@ -10,7 +10,7 @@ let byId ＝ document.getElementById("test");
 ```
 
 
-## document.getElementｓByTag("タグ名"　or "ID名")
+## document.getElementｓByTag("タグ名"　or "class名")
 ### document.getElementｓByTag / document.getElementｓByClassとは
 HTMLのタグ(h1やpやaなど)や、classを元に一致する全ての上ほゆを取得できる。
 ※引数の指定時は""で囲い、stringsとして指定する
