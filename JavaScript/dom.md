@@ -25,12 +25,14 @@ let byclass ＝ document.getElementById("test");
 
 
 ## document.querySelector("CSSセレクターで要素を指定")
-### document.querySelector　/ 
-HTMLのタグ(h1やpやaなど)や、classを元に一致する全ての上ほゆを取得できる。
+### document.querySelectorAll / document.querySelector 
+#### document.querySelectorAll
+document.querySelectorAllはHTMLのタグ(h1やpやaなど)や、classを元に一致する全ての情報を取得できる。
+取得した要素は「HTML collection」と言う配列のような物に格納され、情報を取得する際は、配列と同じように、配列名[index値]で個別の情報を取得可能
 
-取得した要素は「HTML collection」と言う配列のような物に書く方され、情報を取得する際は、配列と同じように、配列名[index値]で個別の情報を取得可能
-
-※特段指定がなければ、対象DOM内から一番初めに一致した情報を返すようになっている。
+#### document.querySelector
+document.querySelectorは特段指定がなければ、対象DOM内から一番初めに一致した情報を返すようになっている。
+そのためAllと違い、情報を取得する際[]でindexを指定する必要がない
 
 ```JavaScript
 let queryClassAll ＝ document.querySelectorAll(".test");
