@@ -21,8 +21,14 @@ const htmlTemplate = `<!DOCTYPE html>
 </body>
 </html>`
 
-fs.mkdirSync(dirName);
-fs.writeFileSync(`${dirName}/index.html`, htmlTemplate);
-fs.writeFileSync(`${dirName}/style.css`, "");
-fs.writeFileSync(`${dirName}/app.js`, "");
- 
+try {
+    fs.mkdirSync(dirName);
+    fs.writeFileSync(`${dirName}/index.html`, htmlTemplate);
+    fs.writeFileSync(`${dirName}/style.css`, "");
+    fs.writeFileSync(`${dirName}/app.js`, ""); 
+} catch(err) {
+    console.log("エラーが発生しました");
+    console.log(err);
+}
+
+
