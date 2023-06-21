@@ -1,5 +1,3 @@
-# Mongoose
-
 ## 起動方法
 
 ---
@@ -40,22 +38,48 @@ jsファイルにMongooseへのconnectionを記述して、そのjsファイル�
 ---
 
 1. スキーマを記述する
-
-```jsx
-const movieSchema = new mongoose.Schema({
-    title: String,
-    year: Number,
-    score: Number,
-    rating: String
-})
-```
-
-1. mongoose.modelでモデルを作成する
-
-```
-//モデルの作成
-const Movie = mongoose.model("Movie", movieSchema); //モデル名は単数系で先頭を大文字にする。第二引数にはスキーマを渡す
-```
+    
+    <aside>
+    💡 省略記法
+    
+    ```jsx
+    const movieSchema = new mongoose.Schema({
+        title: String,
+        year: Number,
+        score: Number,
+        rating: String
+    })
+    ```
+    
+    </aside>
+    
+    <aside>
+    💡 詳細記法
+    
+    詳細に記述することで、requiredなどのオプションも記述する事ができる
+    
+    ```jsx
+    const productSchema = new mongoose.Schema({
+        name: {
+            type: String,
+            required: true //指定されたKey(今回だと<name:>がオブジェクトに存在してないといけない。必須項目)
+        },
+        price: {
+            type: Number,
+            required: true
+        }
+    });
+    ```
+    
+    </aside>
+    
+2. mongoose.modelでモデルを作成する
+    
+    ```
+    //モデルの作成
+    const Movie = mongoose.model("Movie", movieSchema); //モデル名は単数系で先頭を大文字にする。第二引数にはスキーマを渡す
+    ```
+    
 
 ## Mongoose のCRUD
 
