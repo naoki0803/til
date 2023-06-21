@@ -1,3 +1,5 @@
+# Mongoose
+
 ## 起動方法
 
 ---
@@ -33,7 +35,7 @@ jsファイルにMongooseへのconnectionを記述して、そのjsファイル�
     </aside>
     
 
-## Modelの作成方法
+## SchemaとModelの作成方法
 
 ---
 
@@ -62,11 +64,29 @@ jsファイルにMongooseへのconnectionを記述して、そのjsファイル�
     const productSchema = new mongoose.Schema({
         name: {
             type: String,
-            required: true //指定されたKey(今回だと<name:>がオブジェクトに存在してないといけない。必須項目)
+            required: true, //指定されたKey(今回だと<name:>がオブジェクトに存在してないといけない。必須項目)
+            maxLength: 10   //10文字まで
         },
         price: {
             type: Number,
-            required: true
+            required: true,
+            min: [0, "priceは0より大きい金額を入れて下さい"]    //配列にして第一引数にvalidationの値,第二引数にオプションのエラーメッセージを入れられる
+        },
+        onSale: {
+            type: Boolean,
+            default: false //指定しなくてもデフォルトでDBに登録される
+        },
+        categories: [String], //カテゴリーの配列内に登録するものは全てStringというバリデーションになる
+        //ネストしたスキーマを設定することも可能
+        qty: {
+            online: {
+                type: Number,
+                default: 0
+            },
+            inStore: {
+                type: Number,
+                default: 0
+            }
         }
     });
     ```
@@ -269,6 +289,12 @@ Promise {
 }
 ```
 
+### オプションについて
+
+| Key | Value | 意味 |
+| --- | --- | --- |
+| new | true | trueだと、実行結果をreturnする |
+| runValidators | true | 更新の際にもバリデーションが実行される |
 </aside>
 
 ## delete
