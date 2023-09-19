@@ -1,0 +1,143 @@
+SHOW databases;
+use day_4_9_db;
+SHOW TABLES;
+DESCRIBE receipts;
+
+
+# 問1
+SELECT name, age 
+FROM customers
+WHERE age between 28 and 40
+AND name LIKE "%子"
+ORDER BY age DESC
+LIMIT 5;
+
+# 問2
+	#VALUESの引数は()内に記述する必要がある事を学べた失敗事例
+INSERT INTO receipts (customer_id, store_name, price)
+VALUES (100, "Store X", 10000）;
+
+INSERT INTO	receipts (customer_id, store_name, price)
+VALUES	(100, 'Store X', 10000);
+
+	# 問題文にはidに関する記述はないけど、きっとこういう事！
+INSERT INTO receipts (id, customer_id, store_name, price)
+VALUES (303, 100, 'Store X', 10000);
+
+
+SELECT *
+FROM receipts
+WHERE customer_id = 100;
+
+#問3
+DELETE FROM	receipts
+WHERE ID = 301;
+
+# 問4
+DELETE FROM prefectures
+WHERE name IS NULL OR name = "";
+
+SELECT *
+FROM prefectures;
+
+# 問5
+SELECT *FROM customers WHERE id BETWEEN 20 and 50;
+
+UPDATE customers
+set age = +3
+WHERE id BETWEEN 20 and 50;
+
+#問6
+SELECT	*, FLOOR(RAND()*5) + 1 
+FROM	students;
+
+UPDATE students
+set class_no = FLOOR(RAND()*5) + 1 
+WHERE class_no = ;
+
+#問7
+SELECT	*
+FROM	students
+WHERE 	height < ALL(SELECT 	height + 10 FROM 	students WHERE 	class_no IN(3, 4))
+and		class_no = 1;
+
+#問8
+UPDATE employees
+SET department = TRIM(department)
+WHERE CHARACTER_LENGTH(department) <>  CHAR_LENGTH(TRIM(department)); 
+
+#問9
+SELECT *,
+CASE
+	WHEN salary >= 5000000 THEN ROUND(salary * 0.9)
+	WHEN salary < 5000000 THEN  ROUND(salary * 1.1)
+END as new_sal
+FROM 	employees;
+
+#問10
+SELECT *
+FROM customers c 
+
+
+INSERT INTO	customers
+VALUES	(101, '名無権兵衛', 0, now())
+
+
+#問11
+select *
+from customers c ;
+
+ALTER TABLE customers
+ADD name_len char(4);  # 値の指定が必要
+
+
+UPDATE customers
+SET name_len = CHARACTER_LENGTH(name);
+
+#問12
+select *
+from tests_score;
+
+ALTER TABLE tests_score
+ADD score int(5);
+
+ALTER TABLE tests_score
+CHANGE COLUMN scoreINT score  int(5);
+
+ALTER TABLE tests_score DROP COLUMN nameaa;
+
+SELECT COALESCE(test_score_1, test_score_2, test_score_3)
+FROM tests_score;	
+
+UPDATE tests_score
+SET score =
+	CASE 
+		WHEN COALESCE(test_score_1, test_score_2, test_score_3) >= 900
+		THEN FLOOR( COALESCE(test_score_1, test_score_2, test_score_3) * 1.2)
+		
+		WHEN COALESCE(test_score_1, test_score_2, test_score_3) <= 600
+		THEN FLOOR( COALESCE(test_score_1, test_score_2, test_score_3) * 0.8)
+		
+		ELSE COALESCE(test_score_1, test_score_2, test_score_3)
+	END;
+	
+
+#問13
+SELECT *
+FROM employees e
+order by department DESC;
+
+SELECT *
+FROM employees e
+ORDER BY
+	CASE
+		WHEN department = 'マーケティング部'THEN 1
+		WHEN department = '研究部'THEN 2
+		WHEN department = '開発部'THEN 3
+		WHEN department = '総務部'THEN 4
+		WHEN department = '営業部'THEN 5
+		WHEN department = '経理部'THEN 6
+	END;
+
+
+
