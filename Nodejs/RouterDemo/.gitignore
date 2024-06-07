@@ -1,1 +1,26 @@
+# Node.js
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ビルド成果物
+dist/
+build/
+coverage/
+
+# 環境変数ファイル
+.env
+.env.*
+
+# エディタ/IDE
+.vscode/
+.idea/
+
+# OS固有
+.DS_Store
+Thumbs.db
+
+# その他
+*.log
+
