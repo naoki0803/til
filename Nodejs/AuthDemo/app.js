@@ -3,6 +3,7 @@ const app = express();
 const User = require('./models/user')
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 //'mongodb://127.0.0.1:27017/<DBの場所をここで指定できるので、以下の場合movieAppというディレクトリに保存される>>
 mongoose.connect('mongodb://127.0.0.1:27017/authDemo',
@@ -23,6 +24,19 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(express.urlencoded({ extended: true }));
+const conf = {
+    secret: 'mysecret',
+    resave: false,
+    saveUninitialized: false
+};
+app.use(session(conf));
+
+const requireLogin = (req, res, next) => {
+    if (!req.session.user_id){
+        return res.redirect('/login');
+    }
+    next();
+};
 
 app.get('/', (req, res) => {
     res.send('ホームページ');
@@ -40,6 +54,7 @@ app.post('/register', async (req, res) => {
         password: hash
     });
     await user.save();
+    req.session.user_id = user._id;
     res.redirect('/');
 });
 
@@ -52,18 +67,26 @@ app.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
     const validPassword = await bcrypt.compare(password, user.password);
     if (validPassword) {
-        res.send('ようこそ！');
-    }else{
-        res.send('失敗、もう一度試してください');
+        req.session.user_id = user._id;
+        res.redirect('/secret');
+    } else {
+        res.redirect('/login');
     }
 });
 
+app.post('/logout', (req, res) => {
+    req.session.user_id = null;
+    res.redirect('/login');
+});
 
+app.get('/secret', requireLogin, (req, res) => {
+    res.render('secret');
+});
 
-
-app.get('/secret', (req, res) => {
-    res.send('ここはログイン時のみ閲覧できる秘密のページです')
+app.get('/topsecret', requireLogin, (req, res) =>{
+    res.send('TOPsecret');
 })
+
 app.listen(3000, () => {
     console.log('Port3000で待機中');
 });
